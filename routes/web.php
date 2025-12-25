@@ -1,7 +1,21 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+// Route untuk user belum login (guest)
+Route::middleware('guest')->group(function () {
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/login', 'index')->name('login');
+        Route::post('/login', 'login')->name('login.proses');
+    });
+});
+
+// Route untuk user yang sudah login (auth)
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('home');
+    });
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

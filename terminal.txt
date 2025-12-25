@@ -227,3 +227,40 @@ New PHP manual is available (latest: 3.0.1). Update with `doc --update-manual`
 = "Rabu, 24 Desember 2025"
 
 ---
+
+===
+Auth & Middleware
+===
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan make:migration add_username_to_users_table
+
+   INFO  Migration [D:\laragon\www\lara-pos\database\migrations\2025_12_25_081409_add_username_to_users_table.php] created successfully.
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan migrate
+
+   INFO  Running migrations.
+
+  2025_12_25_081409_add_username_to_users_table ................................................................. 1s DONE  
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan make:seeder UserTableSeeder
+
+   INFO  Seeder [D:\laragon\www\lara-pos\database\seeders\UserTableSeeder.php] created successfully.
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan db:seed --class=UserTableSeeder
+
+   INFO  Seeding database.
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan make:middleware CekUserLogin
+
+   INFO  Middleware [D:\laragon\www\lara-pos\app\Http\Middleware\CekUserLogin.php] created successfully.
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan make:controller AuthController
+
+   INFO  Controller [D:\laragon\www\lara-pos\app\Http\Controllers\AuthController.php] created successfully.
+
+---
