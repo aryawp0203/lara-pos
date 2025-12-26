@@ -264,3 +264,73 @@ $ php artisan make:controller AuthController
    INFO  Controller [D:\laragon\www\lara-pos\app\Http\Controllers\AuthController.php] created successfully.
 
 ---
+
+===
+CRUD Kategori 
+===
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan make:model Kategori
+
+   INFO  Model [D:\laragon\www\lara-pos\app\Models\Kategori.php] created successfully.
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan make:controller KategoriController -r
+
+   INFO  Controller [D:\laragon\www\lara-pos\app\Http\Controllers\KategoriController.php] created successfully.     
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ composer require yajra/laravel-datatables-oracle:"^12.0"
+./composer.json has been updated
+Running composer update yajra/laravel-datatables-oracle
+Loading composer repositories with package information
+Updating dependencies
+Lock file operations: 1 install, 0 updates, 0 removals
+  - Locking yajra/laravel-datatables-oracle (v12.6.3)
+Writing lock file
+Installing dependencies from lock file (including require-dev)
+Package operations: 1 install, 0 updates, 0 removals
+  - Downloading yajra/laravel-datatables-oracle (v12.6.3)
+  - Installing yajra/laravel-datatables-oracle (v12.6.3): Extracting archive
+5 package suggestions were added by new dependencies, use `composer suggest` to see details.
+Generating optimized autoload files
+> Illuminate\Foundation\ComposerScripts::postAutoloadDump
+> @php artisan package:discover --ansi
+
+   INFO  Discovering packages.  
+
+  laravel/pail .................................................................................................... DONE
+  laravel/sail .................................................................................................... DONE
+  laravel/tinker .................................................................................................. DONE
+  nesbot/carbon ................................................................................................... DONE
+  nunomaduro/collision ............................................................................................ DONE
+  nunomaduro/termwind ............................................................................................. DONE  
+  yajra/laravel-datatables-oracle ................................................................................. DONE  
+
+82 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+> @php artisan vendor:publish --tag=laravel-assets --ansi --force
+
+   INFO  No publishable resources for tag [laravel-assets].
+
+No security vulnerability advisories found.
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /d/laragon/www/lara-pos (main)
+$ php artisan route:list
+
+  GET|HEAD        / ....................................................................................................      
+  GET|HEAD        home ............................................................................................ home      
+  GET|HEAD        kategori ................................................... kategori.index › KategoriController@index      
+  POST            kategori ................................................... kategori.store › KategoriController@store      
+  GET|HEAD        kategori/create .......................................... kategori.create › KategoriController@create      
+  GET|HEAD        kategori/data ................................................ kategori.data › KategoriController@data      
+  GET|HEAD        kategori/{kategori} .......................................... kategori.show › KategoriController@show      
+  PUT|PATCH       kategori/{kategori} ...................................... kategori.update › KategoriController@update      
+  DELETE          kategori/{kategori} .................................... kategori.destroy › KategoriController@destroy      
+  GET|HEAD        kategori/{kategori}/edit ..................................... kategori.edit › KategoriController@edit      
+  GET|HEAD        login ................................................................... login › AuthController@index      
+  POST            login ............................................................ login.proses › AuthController@login      
+  GET|HEAD        logout ................................................................ logout › AuthController@logout      
+  GET|HEAD        storage/{path} ......................................................................... storage.local      
+  GET|HEAD        up ...................................................................................................      
+
+ 

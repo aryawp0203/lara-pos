@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 
 // Route untuk user belum login (guest)
@@ -22,4 +23,8 @@ Route::middleware('auth')->group(function () {
     })->name('home');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Kategori
+    Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
+    Route::resource('/kategori', KategoriController::class);
 });
