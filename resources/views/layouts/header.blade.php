@@ -1,10 +1,10 @@
  <header class="main-header">
      <!-- Logo -->
-     <a href="#" class="logo">
+     <a href="/" class="logo">
          <!-- mini logo for sidebar mini 50x50 pixels -->
          <span class="logo-mini"><b>L</b>P</span>
          <!-- logo for regular state and mobile devices -->
-         <span class="logo-lg"><b>Laravel</b> POS</span>
+         <span class="logo-lg">{{ config('app.name') }}</span>
      </a>
      <!-- Header Navbar: style can be found in header.less -->
      <nav class="navbar navbar-static-top">
@@ -18,19 +18,17 @@
                  <!-- User Account: style can be found in dropdown.less -->
                  <li class="dropdown user user-menu">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                         <img src="{{ Auth::user()->foto }}" class="user-image"
-                             alt="User Image">
+                         <img src="{{ Auth::user()->foto }}" class="user-image" alt="User Image">
                          <span class="hidden-xs">{{ Auth::user()->name }}</span>
                      </a>
                      <ul class="dropdown-menu">
                          <!-- User image -->
                          <li class="user-header">
-                             <img src="{{ Auth::user()->foto }}" class="img-circle"
-                                 alt="User Image">
+                             <img src="{{ Auth::user()->foto }}" class="img-circle" alt="User Image">
 
                              <p>
                                  {{ Auth::user()->name }}
-                                 {{-- <small>Member since Nov. 2012</small> --}}
+                                 <small>{{ Auth::user()->email }}</small>
                              </p>
                          </li>
                          <!-- Menu Body -->
@@ -51,10 +49,10 @@
                          <!-- Menu Footer-->
                          <li class="user-footer">
                              <div class="pull-left">
-                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                 <a href="#" class="btn btn-default btn-flat">Profil</a>
                              </div>
                              <div class="pull-right">
-                                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Logout</a>
+                                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Keluar</a>
                              </div>
                          </li>
                      </ul>
