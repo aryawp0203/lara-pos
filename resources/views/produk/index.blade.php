@@ -21,6 +21,9 @@
                 <div class="box-body table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
+                            <th>
+                                <input type="checkbox" name="select_all" id="select_all">
+                            </th>
                             <th width="5%">No</th>
                             <th>Kode</th>
                             <th>Nama</th>
@@ -53,6 +56,7 @@
                     url: '{{ route('produk.data') }}',
                 },
                 columns: [
+                    { data: 'select_all', searchable: false, sortable: false },
                     { data: 'DT_RowIndex', searchable: false, sortable: false },
                     { data: 'kode_produk' },
                     { data: 'nama_produk' },
@@ -71,6 +75,7 @@
                 $('#nama_produk').focus();
             });
 
+            // Submit form tambah dan edit
             $('#modal-form').validator().on('submit', function(e) {
                 if (!e.preventDefault()) {
                     $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
@@ -83,6 +88,11 @@
                             return;
                         });
                 }
+            });
+
+            // Checkbox select all
+            $('[name=select_all]').on('click', function () {
+                $(':checkbox').prop('checked', this.checked);
             });
         });
 
