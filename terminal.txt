@@ -441,4 +441,11 @@ $ php artisan route:list --name=produk
   DELETE          produk/{produk} ............................................. produk.destroy › ProdukController@destroy  
   GET|HEAD        produk/{produk}/edit .............................................. produk.edit › ProdukController@edit  
 
- 
+---
+Cetak Barcode & PDF
+---
+LABSI@DESKTOP-EC8NA86 MINGW64 /c/laragon/www/lara-pos (main)
+$ composer require milon/barcode
+
+LABSI@DESKTOP-EC8NA86 MINGW64 /c/laragon/www/lara-pos (main)
+$ composer require barryvdh/laravel-dompdf

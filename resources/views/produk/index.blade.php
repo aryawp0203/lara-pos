@@ -15,16 +15,22 @@
             <div class="box">
                 <div class="box-header with-border">
                     <div class="btn-group">
-                        <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat">
+                        <button onclick="addForm('{{ route('produk.store') }}')" 
+                            class="btn btn-success btn-xs btn-flat">
                             <i class="fa fa-plus-circle"></i> Tambah
                         </button>
-                        <button onclick="deleteSelected('{{ route('produk.deleteSelected') }}')" class="btn btn-danger btn-xs btn-flat">
+                        <button onclick="deleteSelected('{{ route('produk.deleteSelected') }}')" 
+                            class="btn btn-danger btn-xs btn-flat">
                             <i class="fa fa-trash"></i> Hapus Terpilih
+                        </button>
+                        <button onclick="cetakBarcode('{{ route('produk.cetakBarcode') }}')" 
+                            class="btn btn-info btn-xs btn-flat">
+                            <i class="fa fa-barcode"></i> Cetak Barcode
                         </button>
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <form action="" class="form-produk">
+                    <form action="" class="form-produk" method="post">
                         @csrf
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -174,6 +180,22 @@
             } else {
                 alert('Pilih data yang akan dihapus!');
                 return;
+            }
+        }
+
+        // Fungsi untuk mencetak barcode
+        function cetakBarcode(url) {
+            if ($('input:checked').length < 1) {
+                alert('Pilih data yang akan dicetak!');
+                return;
+            } else if ($('input:checked').length < 3) {
+                alert('Pilih minimal 3 data untuk dicetak!');
+                return;
+            } else {
+                $('.form-produk')
+                    .attr('action', url)
+                    .attr('target', '_blank')
+                    .submit();
             }
         }
     </script>
