@@ -21,12 +21,14 @@ class SupplierController extends Controller
             ->addIndexColumn()
             ->addColumn('aksi', function ($supplier) {
                 return '
-                <button type="button" onclick="editForm(`' . route('supplier.update', 
-                    $supplier->id_supplier) . '`)" class="btn btn-xs btn-info">
-                    <i class="fa fa-pencil"></i></button>
-                <button type="button" onclick="deleteData(`' . route('supplier.destroy', 
-                    $supplier->id_supplier) . '`)" class="btn btn-xs btn-danger">
-                    <i class="fa fa-trash"></i></button>
+                <div class="btn-group">
+                    <button type="button" onclick="editForm(`' . route('supplier.update', 
+                        $supplier->id_supplier) . '`)" class="btn btn-xs btn-info">
+                        <i class="fa fa-pencil"></i></button>
+                    <button type="button" onclick="deleteData(`' . route('supplier.destroy', 
+                        $supplier->id_supplier) . '`)" class="btn btn-xs btn-danger">
+                        <i class="fa fa-trash"></i></button>
+                </div>
                 ';
             })
             ->rawColumns(['aksi'])
