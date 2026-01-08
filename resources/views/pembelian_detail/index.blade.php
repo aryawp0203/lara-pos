@@ -4,6 +4,33 @@
     Transaksi Pembelian
 @endsection
 
+@push('css')
+    <style>
+        .tampil-bayar {
+            font-size: 5em;
+            text-align: center;
+            height: 100px;
+        }
+
+        .tampil-terbilang {
+            padding: 10px;
+            background: #f0f0f0;
+        }
+
+        #table-detail tbody tr:last-child {
+            display: none;
+        }
+
+        @media(max-width: 768px) {
+            .tampil-bayar {
+                font-size: 3em;
+                height: 70px;
+                padding-top: 5px;
+            }
+        }
+    </style>
+@endpush
+
 @section('breadcrumb')
     @parent
     <li class="active">Transaksi Pembelian</li>
@@ -30,7 +57,7 @@
                     </table>
                 </div>
 
-                <div class="box-body table-responsive">
+                <div class="box-body">
                     <form class="form-produk">
                         @csrf
                         <div class="form-group row">
@@ -50,17 +77,73 @@
                         </div>
                     </form>
 
-                    <table class="table table-striped table-bordered" id="table-detail">
-                        <thead>
-                            <th width="5%">No</th>
-                            <th>Kode</th>
-                            <th>Nama</th>
-                            <th>Harga</th>
-                            <th width="15%">Jumlah</th>
-                            <th>Subtotal</th>
-                            <th width="15%"><i class="fa fa-cog"></i></th>
-                        </thead>
-                    </table>
+                    <div class="row table-responsive">
+                        <div class="col-lg-12">
+                            <table class="table table-striped table-bordered" id="table-detail">
+                                <thead>
+                                    <th width="5%">No</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
+                                    <th>Harga</th>
+                                    <th width="15%">Jumlah</th>
+                                    <th>Subtotal</th>
+                                    <th width="15%"><i class="fa fa-cog"></i></th>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="tampil-bayar bg-primary"></div>
+                            <div class="tampil-terbilang"></div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <form action="{{ route('pembelian.store') }}" class="form-pembelian" method="post">
+                                @csrf
+                                <input type="hidden" name="id_pembelian" value="{{ $id_pembelian }}">
+                                <input type="hidden" name="total" id="total">
+                                <input type="hidden" name="total_item" id="total_item">
+                                <input type="hidden" name="bayar" id="bayar">
+
+                                <div class="form-group row">
+                                    <label for="totalrp" class="col-lg-2 control-label">Total</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="totalrp" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="diskon" class="col-lg-2 control-label">Diskon</label>
+                                    <div class="col-lg-8">
+                                        <input type="number" name="diskon" id="diskon" class="form-control" value="0">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="bayar" class="col-lg-2 control-label">Bayar</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" id="bayarrp" class="form-control">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-lg-8"></div>
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="submit" class="col-lg-2 control-label"></label>
+                                <div class="col-lg-8">
+                                    <button type="submit" class="btn btn-primary btn-sm btn-flat pull-left btn-simpan">
+                                        <i class="fa fa-floppy-o"></i> Simpan Transaksi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,6 +158,7 @@
 
         $(function() {
             table = $('#table-detail').DataTable({
+                responsive: true,
                 processing: true,
                 autoWidth: true,
                 ajax: {
@@ -83,28 +167,33 @@
                 columns: [
                     { data: 'DT_RowIndex', searchable: false, sortable: false },
                     { data: 'kode_produk' },
-                    { data: 'nama_produk' }, 
-                    { data: 'harga_beli' }, 
-                    { data: 'jumlah' }, 
-                    { data: 'subtotal' }, 
+                    { data: 'nama_produk' },
+                    { data: 'harga_beli' },
+                    { data: 'jumlah' },
+                    { data: 'subtotal' },
                     { data: 'aksi', searchable: false, sortable: false },
-                ]
+                ],
+                dom: 'Brt',
+                bSort: false,
+            })
+            .on('draw.dt', function () {
+                loadForm($('#diskon').val());
             });
 
             $('#table-produk').DataTable();
 
             $(document).on('input', '.jumlah', function () {
                 let id = $(this).data('id');
-                let jumlah = parseInt($(this).val());
+                let jumlah = $(this).val() == "" ? 1 : parseInt($(this).val());
 
                 if (jumlah < 1) {
-                    $(this).val(1);
+                    $(this).val(1).select();
                     alert('Jumlah tidak boleh kurang dari 1');
                     return;
                 }
 
                 if (jumlah > 10000) {
-                    $(this).val(10000);
+                    $(this).val(10000).select();
                     alert('Jumlah tidak boleh lebih dari 10.000');
                     return;
                 }
@@ -123,6 +212,18 @@
                         alert('Tidak dapat menyimpan data');
                         return;
                     });
+            });
+
+            $(document).on('input', '#diskon', function () {
+                if ($(this).val() == "") {
+                    $(this).val(0).select();
+                }
+
+                loadForm($(this).val());
+            });
+
+            $('.btn-simpan').on('click', function () {
+                $('.form-pembelian').submit();
             });
         });
 
@@ -167,6 +268,24 @@
                         return;
                     });
             }
+        }
+
+        function loadForm(diskon = 0) {
+            $('#total').val($('.total').text());
+            $('#total_item').val($('.total_item').text());
+
+            $.get(`{{ url('/pembelian_detail/loadform') }}/${diskon}/${$('.total').text()}`)
+                .done(response => {
+                    $('#totalrp').val('Rp. '+ response.totalrp);
+                    $('#bayarrp').val('Rp. '+ response.bayarrp);
+                    $('#bayar').val(response.bayar);
+                    $('.tampil-bayar').text('Rp. '+ response.bayarrp)
+                    $('.tampil-terbilang').text(response.terbilang);
+                })
+                .fail(errors => {
+                    alert('Tidak dapat menampilkan data');
+                    return;
+                })
         }
     </script>
 @endpush

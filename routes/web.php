@@ -54,12 +54,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('/pengeluaran', PengeluaranController::class);
 
     // pembelian
+    Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
     Route::get('/pembelian/{id}/create', [PembelianController::class, 'create'])->name('pembelian.create');
     Route::resource('/pembelian', PembelianController::class)
         ->except('create');
 
     // pembelian detail
     Route::get('/pembelian_detail/{id}/data', [PembelianDetailController::class, 'data'])->name('pembelian_detail.data');
+    Route::get('/pembelian_detail/loadform/{diskon}/{total}', [PembelianDetailController::class, 'loadform'])->name('pembelian_detail.loadform');
     Route::resource('/pembelian_detail', PembelianDetailController::class)
         ->except('create', 'show', 'edit');
 });
